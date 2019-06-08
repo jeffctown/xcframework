@@ -47,7 +47,7 @@ struct BuildCommand: CommandProtocol {
                 <*> mode <| Option(key: "tvos", defaultValue: nil, usage: "the scheme for your tvOS target")
                 <*> mode <| Option(key: "macos", defaultValue: nil, usage: "the scheme for your macOS target")
                 <*> mode <| Switch(key: "verbose", usage: "enable verbose logs")
-                <*> mode <| Argument(usage: "any extra xcodebuild arguments to be used in the framework archiving")
+                <*> mode <| Argument(defaultValue: [], usage: "any extra xcodebuild arguments to be used in the framework archiving")
         }
     }
     

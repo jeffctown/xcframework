@@ -18,7 +18,7 @@ public class XCFrameworkBuilder {
     public var tvOSScheme: String?
     public var macOSScheme: String?
     public var verbose: Bool = false
-    public var compilerArguments: [String] = []
+    public var compilerArguments: [String]?
     
     public enum XCFrameworkError: Error {
         case nameNotFound
@@ -144,7 +144,9 @@ public class XCFrameworkBuilder {
         //array of arguments for the archive of each framework
         //weird interpolation errors are forcing me to use this "" + syntax.  not sure if this is a compiler bug or not.
         var archiveArguments = ["-project", "" + project, "-scheme", "" + scheme, "archive", "SKIP_INSTALL=NO", "BUILD_LIBRARY_FOR_DISTRIBUTION=YES"]
-        archiveArguments.append(contentsOf: compilerArguments)
+        if let compilerArguments = compilerArguments {
+            archiveArguments.append(contentsOf: compilerArguments)
+        }
         archiveArguments.append(contentsOf: ["-archivePath", archivePath, "-sdk", sdk.rawValue])
         if verbose {
             print("   xcodebuild \(archiveArguments.joined(separator: " "))")

@@ -22,7 +22,10 @@ You can also build from source by cloning this project and running
 ## Quick Start
 
 * Create an XCFramework including a framework with iOS, tvOS, and watchOS:
-``` xcframework build --project PMLog/PMLog.xcodeproj --name PMLog --ios PMLog_iOS --tvos PMLog_TvOS --watchos PMLog_WatchOS```
+
+```bash
+xcframework build --project PMLog/PMLog.xcodeproj --name PMLog --ios PMLog_iOS --tvos PMLog_TvOS --watchos PMLog_WatchOS
+```
 
 ## Usage
 
@@ -78,7 +81,6 @@ Without `--`:
 $ xcframework build --project PMLog/PMLog.xcodeproj --name PMLog --ios PMLog_iOS -configuration Release
 Unrecognized arguments: -configurat
 ```
-
 
 With `--`:
 

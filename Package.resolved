@@ -1,0 +1,43 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Commandant",
+        "repositoryURL": "https://github.com/Carthage/Commandant",
+        "state": {
+          "branch": null,
+          "revision": "ab68611013dec67413628ac87c1f29e8427bc8e4",
+          "version": "0.17.0"
+        }
+      },
+      {
+        "package": "Nimble",
+        "repositoryURL": "https://github.com/Quick/Nimble.git",
+        "state": {
+          "branch": null,
+          "revision": "43304bf2b1579fd555f2fdd51742771c1e4f2b98",
+          "version": "8.0.1"
+        }
+      },
+      {
+        "package": "Quick",
+        "repositoryURL": "https://github.com/Quick/Quick.git",
+        "state": {
+          "branch": null,
+          "revision": "94df9b449508344667e5afc7e80f8bcbff1e4c37",
+          "version": "2.1.0"
+        }
+      },
+      {
+        "package": "Shell",
+        "repositoryURL": "https://github.com/AlwaysRightInstitute/Shell",
+        "state": {
+          "branch": null,
+          "revision": "9982634c51b506d42fcb11b1c85e7ccc145679bd",
+          "version": "0.1.4"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

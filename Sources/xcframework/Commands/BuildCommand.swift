@@ -22,23 +22,25 @@ struct BuildCommand: CommandProtocol {
     struct Options: OptionsProtocol {
         let project: String?
         let name: String?
+        let schemes: [String]
         let outputDirectory: String
         let buildDirectory: String
         let verbose: Bool
-        let schemes: [String]
         
-        static func create(_ project: String?) -> (String?) -> (String) -> (String) -> (Bool) -> ([String]) -> Options {
-            return { name in { outputDirectory in { buildDirectory in  { verbose in { schemes in Options(project: project, name: name, outputDirectory: outputDirectory, buildDirectory: buildDirectory, verbose: verbose, schemes: schemes) } } } } }
+        static func create(_ project: String?) -> (String?)  -> ([String]) -> (String) -> (String) -> (Bool) -> Options {
+            return { name in { schemes in { outputDirectory in { buildDirectory in  { verbose in Options(project: project, name: name, schemes: schemes, outputDirectory: outputDirectory, buildDirectory: buildDirectory, verbose: verbose) } } } } }
         }
         
         static func evaluate(_ mode: CommandMode) -> Result<Options, CommandantError<CommandantError<()>>> {
+            let defaultBuildDirectory = ".xcframework/build/"
             return create
-                <*> mode <| Option(key: "project", defaultValue: nil, usage: "project to build")
-                <*> mode <| Option(key: "name", defaultValue: nil, usage: "framework name, Example: <name>.framework")
-                <*> mode <| Option(key: "output", defaultValue: FileManager.default.currentDirectoryPath, usage: "output directory")
-                <*> mode <| Option(key: "build", defaultValue: FileManager.default.currentDirectoryPath.appending(".xcframework/build/"), usage: "build directory")
+                <*> mode <| Option(key: "project", defaultValue: nil, usage: "REQUIRED: the path and project to build")
+                <*> mode <| Option(key: "name", defaultValue: nil, usage: "REQUIRED: the framework name, Example: <name>.framework")
+                <*> mode <| Option(key: "schemes", defaultValue: [], usage: "REQUIRED: a comma separated list of the schemes to build")
+                <*> mode <| Option(key: "output", defaultValue: FileManager.default.currentDirectoryPath, usage: "the output directory (default: .)")
+                <*> mode <| Option(key: "build", defaultValue: FileManager.default.currentDirectoryPath.appending(defaultBuildDirectory), usage: "build directory (default: \(defaultBuildDirectory)")
                 <*> mode <| Switch(key: "verbose", usage: "enable verbose logs")
-                <*> mode <| Option(key: "schemes", defaultValue: [], usage: "schemes to build")
+            
         }
     }
     
@@ -56,7 +58,7 @@ struct BuildCommand: CommandProtocol {
             case .success():
                 return .success(())
             case .failure(let error):
-                return .failure(.usageError(description: error.localizedDescription))
+                return .failure(.usageError(description: error.localizedDescription + "\n Please run 'xcframework help build' to see the full list of parameters for this command."))
         }
     }
 }

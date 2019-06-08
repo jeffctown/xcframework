@@ -22,6 +22,21 @@ public class XCFrameworkBuilder {
         case schemesNotFound
         case buildDirectoryNotFound
         case outputDirectoryNotFound
+        
+        public var localizedDescription: String {
+            switch self {
+            case .nameNotFound:
+                return "No name parameter found."
+            case .projectNotFound:
+                return "No project parameter found."
+            case .schemesNotFound:
+                return "No schemes found."
+            case .buildDirectoryNotFound:
+                return "No build directory found."
+            case .outputDirectoryNotFound:
+                return "No output directory found."
+            }
+        }
     }
     
     public init(configure: (XCFrameworkBuilder) -> ()) {

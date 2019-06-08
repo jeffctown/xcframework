@@ -4,8 +4,6 @@
 [![GitHub release](https://img.shields.io/github/release/jeffctown/xcframework.svg?style=for-the-badge)](https://github.com/jeffctown/xcframework/releases)
 [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=for-the-badge)](https://raw.githubusercontent.com/jeffctown/xcframework/master/LICENSE.md) 
 
-[![Build Status](https://travis-ci.org/jeffctown/xcframework.svg?&branch=master)](https://travis-ci.org/jeffctown/xcframework)[![codecov.io](https://codecov.io/github/jeffctown/xcframework/coverage.svg?branch=master)](https://codecov.io/github/jeffctown/xcframework?branch=master)
-
 xcframework is a tool to create XCFrameworks.
 
 ## Installation

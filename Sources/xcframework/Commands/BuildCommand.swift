@@ -40,8 +40,8 @@ struct BuildCommand: CommandProtocol {
             return create
                 <*> mode <| Option(key: "project", defaultValue: nil, usage: "REQUIRED: the path and project to build")
                 <*> mode <| Option(key: "name", defaultValue: nil, usage: "REQUIRED: the framework name, Example: <name>.framework")
-                <*> mode <| Option(key: "output", defaultValue: FileManager.default.currentDirectoryPath.appending(defaultBuildDirectory), usage: "the output directory (default: .)")
-                <*> mode <| Option(key: "build", defaultValue: defaultBuildDirectory, usage: "build directory (default: \(defaultBuildDirectory)")
+                <*> mode <| Option(key: "output", defaultValue: FileManager.default.currentDirectoryPath, usage: "the output directory (default: .)")
+                <*> mode <| Option(key: "build", defaultValue: FileManager.default.currentDirectoryPath.appending(defaultBuildDirectory), usage: "build directory (default: \(defaultBuildDirectory)")
                 <*> mode <| Option(key: "ios", defaultValue: nil, usage: "the scheme for your iOS target")
                 <*> mode <| Option(key: "watchos", defaultValue: nil, usage: "the scheme for your watchOS target")
                 <*> mode <| Option(key: "tvos", defaultValue: nil, usage: "the scheme for your tvOS target")

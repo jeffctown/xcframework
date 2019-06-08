@@ -21,7 +21,7 @@ MKDIR=mkdir -p
 SUDO=sudo
 CP=cp
 
-.PHONY: all clean test installables package install uninstall xcodeproj xcodetest codecoverage archive release
+.PHONY: all clean test installables package install uninstall xcodeproj xcodetest archive release
 
 all: installables
 

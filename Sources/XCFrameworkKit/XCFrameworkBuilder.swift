@@ -140,7 +140,7 @@ public class XCFrameworkBuilder {
         print("Building scheme \(scheme) for \(sdk.rawValue)...")
         var frameworkArguments = [String]()
         //path for each scheme's archive
-        let archivePath = buildPath + "\(scheme).xcarchive"
+        let archivePath = buildPath + "\(scheme)-\(sdk.rawValue).xcarchive"
         //array of arguments for the archive of each framework
         //weird interpolation errors are forcing me to use this "" + syntax.  not sure if this is a compiler bug or not.
         var archiveArguments = ["-project", "" + project, "-scheme", "" + scheme, "archive", "SKIP_INSTALL=NO", "BUILD_LIBRARY_FOR_DISTRIBUTION=YES"]

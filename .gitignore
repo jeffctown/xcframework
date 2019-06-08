@@ -5,3 +5,4 @@
 .xcframework
 Carthage/
 XCFrameworkKit.framework.zip
+xcframework.pkg

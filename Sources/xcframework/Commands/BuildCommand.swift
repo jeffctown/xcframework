@@ -32,7 +32,6 @@ struct BuildCommand: CommandProtocol {
         }
         
         static func evaluate(_ mode: CommandMode) -> Result<Options, CommandantError<CommandantError<()>>> {
-            
             return create
                 <*> mode <| Option(key: "project", defaultValue: nil, usage: "project to build")
                 <*> mode <| Option(key: "name", defaultValue: nil, usage: "framework name, Example: <name>.framework")
@@ -44,51 +43,20 @@ struct BuildCommand: CommandProtocol {
     }
     
     func run(_ options: Options) -> Result<(), CommandantError<()>> {
-        guard let name = options.name else {
-            return .failure(.usageError(description: "No Framework name Found!! Please use the --name or -n option to pass in the framework's name."))
+        let builder = XCFrameworkBuilder() { builder in
+            builder.name = options.name
+            builder.project = options.project
+            builder.schemes = options.schemes
+            builder.outputDirectory = options.outputDirectory
+            builder.buildDirectory = options.buildDirectory
+            builder.verbose = options.verbose
         }
-        
-        guard let project = options.project else {
-            return .failure(.usageError(description: "No Project Found! Please use the --project or -p option to pass in the project's name."))
+        let result = builder.build()
+        switch result {
+            case .success():
+                return .success(())
+            case .failure(let error):
+                return .failure(.usageError(description: error.localizedDescription))
         }
-        
-        guard options.schemes.count > 0 else {
-            return .failure(.usageError(description: "No schemes Found! Please use the --schemes or -s option to pass in the schemes to build in your project."))
-        }
-        
-        print("Creating \(name)...")
-        
-        //final xcframework location
-        let finalOutput = options.outputDirectory + "/" + name + ".xcframework"
-        
-        shell.usr.rm(finalOutput)
-        //array of arguments for the final xcframework construction
-        var frameworksArguments = ["-create-xcframework"]
-        
-        for scheme in options.schemes {
-            print("Building scheme \(scheme)...")
-            //path for each scheme's archive
-            let archivePath = options.buildDirectory + "\(scheme).xcarchive"
-            //array of arguments for the archive of each framework
-            //weird interpolation errors are forcing me to use this "" + syntax.  not sure if this is a compiler bug or not.
-            let archiveArguments = ["-project", "" + project, "-scheme", "" + scheme, "archive", "SKIP_INSTALL=NO", "BUILD_LIBRARY_FOR_DISTRIBUTION=YES", "-archivePath", archivePath]
-            if options.verbose {
-                print("   xcodebuild \(archiveArguments.joined(separator: " "))")
-            }
-            shell.usr.bin.xcodebuild.dynamicallyCall(withArguments: archiveArguments)
-            //add this framework to the list for the final output command
-            frameworksArguments.append("-framework")
-            frameworksArguments.append(archivePath + "/Products/Library/Frameworks/\(name).framework")
-        }
-        print("Combining...")
-        //add output to final command
-        frameworksArguments.append("-output")
-        frameworksArguments.append(finalOutput)
-        if options.verbose {
-            print("xcodebuild \(frameworksArguments.joined(separator: " "))")
-        }
-        shell.usr.bin.xcodebuild.dynamicallyCall(withArguments: frameworksArguments)
-        print("Success. \(finalOutput)")
-        return .success(())
     }
 }

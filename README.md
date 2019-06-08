@@ -17,7 +17,11 @@ running it.
 ### Compiling from source:
 
 You can also build from source by cloning this project and running
-`make install` (Xcode 11.0 beta 1 or later).  Note: Running `make install` requires sudo permission to install the final executable.
+`make install` (Xcode 11.0 beta 1 or later).  Note: Running `make install` requires sudo permission to install the final executable. 
+
+### Compiling from source without sudo:
+
+You can build from source and copy the executable yourself if you prefer to.  Run `make installables` to output the final executable to `./.build/release/xcframework`.  Feel free to use or copy the executable how you like.
 
 ## Quick Start
 
